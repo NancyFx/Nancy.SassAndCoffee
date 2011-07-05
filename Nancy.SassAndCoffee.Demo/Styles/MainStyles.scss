@@ -1,14 +1,8 @@
 ﻿$blue: #3bbfce;
 $margin: 16px;
 
-.content-navigation {
-  border-color: $blue;
-  color:
-    darken($blue, 9%);
-}
-
-.border {
+.main {
   padding: $margin / 2;
   margin: $margin / 2;
-  border-color: $blue;
+  background: darken($blue, 9%);
 }

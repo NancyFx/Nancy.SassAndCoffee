@@ -2,7 +2,6 @@ namespace Nancy.SassAndCoffee
 {
     using System;
     using System.IO;
-    using System.Text;
 
     using global::SassAndCoffee.Core;
     using global::SassAndCoffee.Core.Caching;
@@ -11,6 +10,18 @@ namespace Nancy.SassAndCoffee
 
     public static class Hooks
     {
+        /// <summary>
+        /// <para>
+        /// Enable SassAndCoffee support in the application.
+        /// </para>
+        /// <para>
+        /// SassAndCoffee supports on the fly compilation and caching of CoffeeScript and Sass,
+        /// along with concatenation and minification.
+        /// </para>
+        /// </summary>
+        /// <param name="pipelines">Application pipelines to hook into</param>
+        /// <param name="cache">Cache provider to use</param>
+        /// <param name="rootPathProvider">Root path provider</param>
         public static void Enable(IApplicationPipelines pipelines, ICompiledCache cache, IRootPathProvider rootPathProvider)
         {
             var host = new NancyCompilerHost(rootPathProvider);
