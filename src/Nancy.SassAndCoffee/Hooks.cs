@@ -40,12 +40,12 @@ namespace Nancy.SassAndCoffee
                         return null;
                     }
 
-                    if (!compiler.CanCompile(ctx.Request.Uri))
+                    if (!compiler.CanCompile(ctx.Request.Url.Path))
                     {
                         return null;
                     }
 
-                    var content = compiler.GetCompiledContent(ctx.Request.Uri);
+                    var content = compiler.GetCompiledContent(ctx.Request.Url.Path);
 
                     return content.Compiled ? GetResponse(content) : null;
                 };
