@@ -8,6 +8,8 @@ namespace Nancy.SassAndCoffee.Demo
         {
             base.InitialiseInternal(container);
 
+            StaticConfiguration.DisableErrorTraces = false;
+
             SassAndCoffee.Hooks.Enable(this, new InMemoryCache(), container.Resolve<IRootPathProvider>());
         }
     }
