@@ -95,7 +95,7 @@ task :nuget_package => [:publish] do
     # Generate the NuGet packages from the newly edited nuspec fileiles
     nuspecs.each do |nuspec|        
         nuget = NuGetPack.new
-        nuget.command = "tools/nuget/nuget.exe"
+        nuget.command = "dependencies/Nancy/tools/nuget/nuget.exe"
         nuget.nuspec = "\"" + root + '/' + nuspec + "\""
         nuget.output = "#{OUTPUT}/nuget"
         nuget.parameters = "-Symbols", "-BasePath \"#{root}\""     #using base_folder throws as there are two options that begin with b in nuget 1.4
