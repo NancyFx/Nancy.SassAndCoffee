@@ -4,13 +4,13 @@ namespace Nancy.SassAndCoffee.Demo
 
     public class Bootstrapper : DefaultNancyBootstrapper
     {
-        protected override void InitialiseInternal(TinyIoC.TinyIoCContainer container)
+        protected override void ApplicationStartup(TinyIoC.TinyIoCContainer container, Nancy.Bootstrapper.IPipelines pipelines)
         {
-            base.InitialiseInternal(container);
+            base.ApplicationStartup(container, pipelines);
 
             StaticConfiguration.DisableErrorTraces = false;
 
-            SassAndCoffee.Hooks.Enable(this, new InMemoryCache(), container.Resolve<IRootPathProvider>());
+            SassAndCoffee.Hooks.Enable(pipelines, new InMemoryCache(), container.Resolve<IRootPathProvider>());
         }
     }
 }

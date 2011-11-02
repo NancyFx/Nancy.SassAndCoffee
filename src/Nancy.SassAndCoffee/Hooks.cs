@@ -22,7 +22,7 @@ namespace Nancy.SassAndCoffee
         /// <param name="pipelines">Application pipelines to hook into</param>
         /// <param name="cache">Cache provider to use</param>
         /// <param name="rootPathProvider">Root path provider</param>
-        public static void Enable(IApplicationPipelines pipelines, ICompiledCache cache, IRootPathProvider rootPathProvider)
+        public static void Enable(IPipelines pipelines, ICompiledCache cache, IRootPathProvider rootPathProvider)
         {
             var host = new NancyCompilerHost(rootPathProvider);
 
