@@ -5,7 +5,7 @@ namespace Nancy.SassAndCoffee
 
     using global::SassAndCoffee.Core;
 
-    public class NancyCompilerHost : ICompilerHost
+    public class NancyCompilerHost
     {
         private readonly IRootPathProvider rootPathProvider;
 

@@ -8,6 +8,11 @@ namespace Nancy.SassAndCoffee
 
     using Nancy.Bootstrapper;
 
+    using global::SassAndCoffee.JavaScript;
+    using global::SassAndCoffee.JavaScript.CoffeeScript;
+    using global::SassAndCoffee.JavaScript.Uglify;
+    using global::SassAndCoffee.Ruby.Sass;
+
     public static class Hooks
     {
         /// <summary>
@@ -26,12 +31,20 @@ namespace Nancy.SassAndCoffee
         {
             var host = new NancyCompilerHost(rootPathProvider);
 
-            var compiler = new ContentCompiler(host, cache);
+            var compiler = new ContentPipeline(new IContentTransform[]
+                {
+                    new FileSourceContentTransform("text/javascript", ".js"),
+                    new JavaScriptCombineContentTransform(),
+                    new FileSourceContentTransform("text/coffeescript", ".coffee"),
+                    new CoffeeScriptCompilerContentTransform(),
+                    new UglifyCompilerContentTransform(),
+                    new SassCompilerContentTransform(),
+                });
 
-            pipelines.BeforeRequest.AddItemToStartOfPipeline(GetPipelineHook(compiler));
+            pipelines.BeforeRequest.AddItemToStartOfPipeline(GetPipelineHook(compiler, host));
         }
 
-        private static Func<NancyContext, Response> GetPipelineHook(ContentCompiler compiler)
+        private static Func<NancyContext, Response> GetPipelineHook(IContentPipeline compiler, NancyCompilerHost host)
         {
             return ctx =>
                 {
@@ -40,31 +53,31 @@ namespace Nancy.SassAndCoffee
                         return null;
                     }
 
-                    if (!compiler.CanCompile(ctx.Request.Url.Path))
+                    var result = compiler.ProcessRequest(host.MapPath(ctx.Request.Path));
+
+                    if (result == null)
                     {
                         return null;
                     }
 
-                    var content = compiler.GetCompiledContent(ctx.Request.Url.Path);
-
-                    return content.Compiled ? GetResponse(content) : null;
+                    return GetResponse(result);
                 };
         }
 
-        private static Response GetResponse(CompilationResult content)
+        private static Response GetResponse(ContentResult content)
         {
             var response = new Response();
 
             response.StatusCode = HttpStatusCode.OK;
             response.ContentType = content.MimeType;
-            response.Headers["ETag"] = content.SourceLastModifiedUtc.Ticks.ToString("x");
-            response.Headers["Content-Disposition"] = "inline";
-            response.Headers["Last-Modified"] = content.SourceLastModifiedUtc.ToString("R");
+            //response.Headers["ETag"] = content.SourceLastModifiedUtc.Ticks.ToString("x");
+            //response.Headers["Content-Disposition"] = "inline";
+            //response.Headers["Last-Modified"] = content.SourceLastModifiedUtc.ToString("R");
             response.Contents = s =>
                 {
                     using (var writer = new StreamWriter(s))
                     {
-                        writer.Write(content.Contents);
+                        writer.Write(content.Content);
                         writer.Flush();
                     }
                 };
