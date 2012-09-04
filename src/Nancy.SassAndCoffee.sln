@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.SassAndCoffee", "Nancy.SassAndCoffee\Nancy.SassAndCoffee.csproj", "{1079A176-5E38-4FD2-AAB7-60BE06D3120E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.SassAndCoffee.Demo", "Nancy.SassAndCoffee.Demo\Nancy.SassAndCoffee.Demo.csproj", "{69EF6E2C-99C0-4636-B6C9-FBE12D9563A3}"
