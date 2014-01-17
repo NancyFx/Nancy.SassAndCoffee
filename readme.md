@@ -1,3 +1,7 @@
+## Important Note:
+
+SassAndCoffee is no longer Supported.
+
 ## Contributors
 
 * [Andreas Håkansson](http://github.com/thecodejunkie)
